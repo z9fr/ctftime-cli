@@ -2,6 +2,7 @@ package handler
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/rodaine/table"
 	"github.com/z9fr/ctftime-cli/pkg/utils"
@@ -28,10 +29,12 @@ func DisplayUpcommingCTFRSS(padding int) {
 func DisplayUpcommingCTFJSON() {
 	ctfevents := utils.FetchUpcommingJSON()
 
-	tbl := utils.CustamizeAndCreateTable(table.New("ctf_id", "ctf_title", "weight", "start_date", "ctf_url", "ctftime_url"))
+	tbl := utils.CustamizeAndCreateTable(table.New("ctf_id", "ctf_title", "weight", "start_date", "duration", "ctf_url", "ctftime_url"))
 
 	for _, ctf := range ctfevents {
-		tbl.AddRow(ctf.ID, ctf.Title, ctf.Weight, ctf.Start.Format("02-Jan-2006"), ctf.URL, ctf.CtftimeURL)
+		duration := fmt.Sprintf("%d days %d hours", ctf.Duration.Days, ctf.Duration.Hours)
+
+		tbl.AddRow(ctf.ID, ctf.Title, ctf.Weight, ctf.Start.Format("02-Jan-2006"), duration, ctf.URL, ctf.CtftimeURL)
 	}
 
 	tbl.Print()
