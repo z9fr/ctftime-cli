@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"fmt"
+	"errors"
 
 	"github.com/rodaine/table"
 	"github.com/z9fr/ctftime-cli/pkg/utils"
@@ -11,7 +11,7 @@ func DisplayUpcommingCTF(padding int) {
 	events := utils.FetchUpcommingCTF()
 
 	if padding > len(events.Items) {
-		fmt.Println("not enough events") // handle errors properly later
+		utils.LogError(errors.New("Not Enough Events to Display"))
 	}
 
 	tbl := utils.CustamizeAndCreateTable(table.New("ctf_id", "ctf_name", "start_date", "url"))
