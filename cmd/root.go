@@ -6,11 +6,9 @@ package cmd
 
 import (
 	"os"
-	"strconv"
 
 	"github.com/spf13/cobra"
 	"github.com/z9fr/ctftime-cli/pkg/handler"
-	"github.com/z9fr/ctftime-cli/pkg/utils"
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -24,16 +22,19 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) <= 0 {
-			handler.DisplayUpcommingCTF(5)
-		} else {
-			i, err := strconv.Atoi(args[0])
-			if err != nil {
-				utils.LogError(err)
-			}
-			handler.DisplayUpcommingCTF(i)
+		/*
+			if len(args) <= 0 {
+				handler.DisplayUpcommingCTFRSS(5)
+			} else {
+				i, err := strconv.Atoi(args[0])
+				if err != nil {
+					utils.LogError(err)
+				}
+				handler.DisplayUpcommingCTFRSS(i)
 
-		}
+			}
+		*/
+		handler.DisplayUpcommingCTFJSON()
 	},
 }
 
