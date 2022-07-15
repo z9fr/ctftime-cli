@@ -1,51 +1,13 @@
 package utils
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
 
 	"github.com/guptarohit/asciigraph"
-	log "github.com/sirupsen/logrus"
 	"github.com/z9fr/ctftime-cli/pkg/models"
 )
 
-func createGraph(url string) {
-	//	url := "https://ctftime.org/api/v1/teams/1005/"
-
-	spaceClient := http.Client{
-		Timeout: time.Second * 10, // Timeout after 2 seconds
-	}
-
-	req, err := http.NewRequest(http.MethodGet, url, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	req.Header.Set("User-Agent", "spacecount-tutorial")
-
-	res, getErr := spaceClient.Do(req)
-	if getErr != nil {
-		log.Fatal(getErr)
-	}
-
-	if res.Body != nil {
-		defer res.Body.Close()
-	}
-
-	body, readErr := ioutil.ReadAll(res.Body)
-	if readErr != nil {
-		log.Fatal(readErr)
-	}
-
-	ctfteam := models.CTFTEAM{}
-	jsonErr := json.Unmarshal(body, &ctfteam)
-	if jsonErr != nil {
-		log.Fatal(jsonErr)
-	}
-
+func CreateGraph(ctfteam models.CTFTEAM) {
 	a := ctfteam.Rating
 	data := []float64{float64(a.Num2011.RatingPoints), float64(a.Num2012.RatingPoints), float64(a.Num2013.RatingPoints),
 		float64(a.Num2014.RatingPoints), float64(a.Num2015.RatingPoints), float64(a.Num2016.RatingPoints), float64(a.Num2017.RatingPoints),
